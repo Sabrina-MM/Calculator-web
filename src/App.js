@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/* eslint no-eval: 0  */
+import React, { useState } from "react";
+import words from "lodash.words";
+import Functions from "./components/Functions";
+import MathOperations from "./components/MathOperations";
+import Numbers from "./components/Numbers";
+import Result from "./components/Result";
 
-function App() {
+// style CSS
+import "./css/App.css";
+
+const App = () => {
+  //Array Destructuring
+  const [text, setText] = useState("");
+  const items = words(text, /[^-^+^*^/]+/g);
+
+  const value = items.length > 0 ? items[items.length - 1] : "0";
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="react-calculator">
+      <Result value={value} />
+      <Numbers
+        onClickNumber={(number) => {
+          setText(`${text}${number}`);
+        }}
+      />
+      <Functions
+        onContentClear={() => {
+          setText("");
+        }}
+        onDelete={() => {
+          if (text.length > 0) {
+            const newText = text.substring(0, text.length - 1);
+
+            setText(newText);
+          }
+        }}
+      />
+      <MathOperations
+        onClickOperation={(operation) => {
+          setText(`${text}${operation}`);
+        }}
+        onClickEqual={(equal) => {
+          setText(eval(text).toString());
+        }}
+      />
     </div>
   );
-}
+};
 
 export default App;
