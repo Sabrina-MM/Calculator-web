@@ -3,7 +3,7 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 0, 0.096);
+  background: #e5e5e5;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
